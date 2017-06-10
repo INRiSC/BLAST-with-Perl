@@ -16,7 +16,7 @@ while ($count<=(length($seq)-11)) {
     my $Words = join('', @DNA);
     @Words_loc=split(/\./,$Words);
 
-    while ($tally<=$#Words_loc) {                    #位置信息存入二位数组
+    while ($tally<=$#Words_loc) {                    
         $compare[$count][$tally]=@Words_loc[$tally]; #store all positions of all words
         $tally ++;
     }
@@ -29,20 +29,20 @@ close FILE;
 
 $count=0; 
 %grade;
-while ($count<=(length($seq)-11)) {    #get every matched words' number of position
-    $a = $#{$compare[$count]};         #得到每个Words的符合位置数
+while ($count<=(length($seq)-11)) {    #get every matched words's number of position
+    $a = $#{$compare[$count]};         
 
     while ($tally<=$a) {
         @B=split(/:/,$compare[$count][$tally]); 
-        $b=$B[1]-$count; #$b refer to the beginning position
+        $b=$B[1]-$count;               #$b refer to the beginning position
 
         if (exists $grade{$B[0]}{$b}) {
             $grade{$B[0]}{$b} ++;
         }
         else{
-            $grade{$B[0]}{$b}=1; #x shows chromosome No.
-                                 #y shows position of every beginning of "every query"
-        }                        #grade shows how many words give the same beginning
+            $grade{$B[0]}{$b}=1;    #x shows chromosome No.
+                                    #y shows position of every beginning of "every query"
+        }                           #grade shows how many words give the same beginning
         $tally ++;
     }
     $tally=0;
@@ -51,26 +51,26 @@ while ($count<=(length($seq)-11)) {    #get every matched words' number of posit
 
 
 
-$count=1; # this count refers to chromosome No.
+$count=1;                                   # this count refers to chromosome No.
 while ($count<=25) {
-    my %hash = %{$grade{$count}};           #hash的赋值
+    my %hash = %{$grade{$count}};           #hash initiation
     while(($key, $value) = each(%hash)) {   #$key is the certain beginning position on the chromosome
-    if ($value>10) {                         #value is the "grade" above
+    if ($value>10) {                        #value is the "grade" above
 
 
             open FILE, "/2_disk/chenyr/hg19chr/$count" or die "cannot open the file: $!\n";
             $chr_target=<FILE>;
-            my $loc_seq=substr($chr_target, $key, length($seq)); #get the sequence at the guessed location for later alignment
+            my $loc_seq=substr($chr_target, $key, length($seq));    #get the sequence at the guessed location for later alignment
 
 
 
-#以下为Alignment部分
+###### Alignment:
 
 $count2=0;
 $L=length($seq);
 @Gene_One;
 while($count2<$L){
-$Gene_One[$count2]= substr($seq, $count2, 1);    #一次从字符串中取一个值存入数组,可取null
+$Gene_One[$count2]= substr($seq, $count2, 1);
 $count2=$count2+1;
 }
 
@@ -83,7 +83,7 @@ $count2=$count2+1;
 }
 
 
-@comparision;                                      #定义二维数组
+@comparision;
 $count2=1;
 $L=length($seq);
 while ($count2<=$L) {
@@ -111,7 +111,7 @@ else{
 
 $comparision[0][0]=0;
 
-$count2_row=0;                                    #line为行,row为列
+$count2_row=0;                                   
 $count2_line=0;
 
 
@@ -173,7 +173,7 @@ while ($count2_line<=$length+1) {
 
 
 
-@result_1;                            #定义结果数组
+@result_1;                            #the result array
 @result_2;
 
 $result_line=$length_line;
@@ -240,7 +240,7 @@ while ($result_line>=0 && $result_row>=0) {
 
 
 
-print "Chromosome:",$count,"   ","Location:",($key+11),"   ",$value,"\n";    #$count为染色体号，$value为得分，$key为打分差值
+print "Chromosome:",$count,"   ","Location:",($key+11),"   ",$value,"\n";    #$count is the chomesome No.，$value is score，$key is location
 
 while ($marker1>0) {
     print $result_1[$marker1-1];
