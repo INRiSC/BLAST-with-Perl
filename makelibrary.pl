@@ -9,10 +9,10 @@ my @lines;
 my $LINE;
 my $content;
 
-opendir ( DIR, '/3_disk/zhujd/genomelibrary/chrlist' ) || die "Error in opening dir \n";
+opendir ( DIR, '#######' ) || die "Error in opening dir \n"; #fill with your reference dir
 while(($filename = readdir(DIR))){
 
-        open (CHR,'/3_disk/zhujd/genomelibrary/chrlist/'.$filename)|| die "Error in opening CHR\n";
+        open (CHR,'#######'.$filename)|| die "Error in opening CHR\n";
         @lines = <CHR>;
         
         foreach $LINE (@lines){
@@ -22,14 +22,14 @@ while(($filename = readdir(DIR))){
 
                 for($i=0;$i<=length($content)-11;$i++){
                         $seq= substr($content,$i,11);
-                        opendir ( LIB, '/3_disk/zhujd/genomelibrary/library5' ) || die "Error in opening LIB \n";
+                        opendir ( LIB, '#######' ) || die "Error in opening LIB \n"; #fill with your output dir
                         if (($seq != readdir(LIB))){
-                                open (OUT,'>'.'/3_disk/zhujd/genomelibrary/library5'.'/'.$seq);
+                                open (OUT,'>'.'#######'.'/'.$seq);
                                 print OUT $filename.':'.$i.".";
                                 close OUT;
                         }
                         else{
-                                open (OUT,'>>'.'/3_disk/zhujd/genomelibrary/library5'.'/'.$seq);
+                                open (OUT,'>>'.'#######'.'/'.$seq);
                                 print OUT $filename.':'.$i.".";
                                 close OUT;
                         }
